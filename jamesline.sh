@@ -5,6 +5,7 @@ THICK=`echo -e -n "\xE2\xAE\x80"`
 THIN=`echo -e -n "\xE2\xAE\x81"`
 
 COLOR='\[\033[0;36m\]'
+HOSTCOLOR='\[\033[0;32m\]'
 NORMAL='\[\033[0;37m\]'
 START='\[\033[0;32m\]'
 
@@ -35,6 +36,11 @@ while true; do
    cd ..
 done
 
-echo -n "$COLOR$PROMPT$THIN$NORMAL "
+SSH=""
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+   SSH="$HOSTCOLOR$(whoami)@$HOSTNAME $THIN "
+fi
+
+echo -n "$SSH$COLOR$PROMPT$THIN$NORMAL "
 
 popd > /dev/null
