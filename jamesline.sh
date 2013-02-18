@@ -38,7 +38,7 @@ done
 
 SSH=""
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-   SSH="$HOSTCOLOR$(whoami)@$HOSTNAME $THIN "
+   SSH="$HOSTCOLOR$(whoami)@$HOSTNAME:"
 fi
 
 echo -n "$SSH$COLOR$PROMPT$THIN$NORMAL "
