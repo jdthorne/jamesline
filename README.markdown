@@ -3,17 +3,16 @@ Jamesline
 
 It's basically a super-lightweight version of [Powerline](http://github.com/lokaltog/powerline) that just displays your current folder relative to either your home folder, or the nearest .git repo.
 
-Ever get frustrated at having your terminal prompt look like:
+Ever get frustrated at having your terminal prompt look like this?
 
     ~/Work/Contracting/Projects/Active/The Project/workspace/src/module/folder $
 
 Well, now it can look like:
 
-    Project > Module > Folder >
+    Project ❯ Module ❯ Folder ❯
 
 instead.
 
-This needs the [Powerline](http://github.com/lokaltog/powerline) fonts.
 
 Installation
 ------------

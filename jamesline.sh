@@ -2,7 +2,7 @@
 
 # Thick = 80
 THICK=`echo -e -n "\xE2\xAE\x80"`
-THIN=`echo -e -n "\xE2\xAE\x81"`
+THIN=`echo -e -n "\xE2\x9D\xAF"`
 
 COLOR='\[\033[0;36m\]'
 HOSTCOLOR='\[\033[0;32m\]'
