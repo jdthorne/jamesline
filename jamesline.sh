@@ -9,6 +9,9 @@ HOSTCOLOR='\[\033[0;32m\]'
 NORMAL='\[\033[0;37m\]'
 START='\[\033[0;32m\]'
 
+CLEAN=`echo -e -n "\xE2\x9C\x93"`
+DIRTY=`echo -e -n "\xE2\x9C\xAD"`
+
 pushd . > /dev/null
 
 PROMPT=""
@@ -28,7 +31,12 @@ while true; do
    BASE=`basename "$PWD"`
 
    if [ -e '.git' ]; then
-      PROMPT="$BASE $PROMPT"
+      STATUS="$CLEAN"
+      if [[ `git status -s` != "" ]]; then
+        STATUS="$DIRTY"
+      fi
+
+      PROMPT="$BASE $STATUS $PROMPT"
       break
    fi
 
