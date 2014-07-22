@@ -6,6 +6,7 @@ THIN=`echo -e -n "\xE2\x9D\xAF"`
 
 COLOR='\[\033[0;36m\]'
 HOSTCOLOR='\[\033[0;32m\]'
+MOUNTCOLOR='\[\033[0;33m\]'
 NORMAL='\[\033[0;37m\]'
 START='\[\033[0;32m\]'
 
@@ -15,6 +16,16 @@ DIRTY=`echo -e -n "\xE2\x9C\xAD"`
 pushd . > /dev/null
 
 PROMPT=""
+MOUNT=""
+
+MOUNTINFO="`df . | tail -n 1`"
+MOUNTPOINT="`echo $MOUNTINFO | rev | cut -d ' ' -f 1 | rev`"
+MOUNTISSSH="`echo $MOUNTINFO | grep '@'`"
+
+if [[ "$MOUNTPOINT" != "/" ]]; then
+  MOUNT="`echo $MOUNTINFO | cut -d ' ' -f 1 | sed 's^:/$^^'`"
+  # MOUNT="`echo $MOUNTINFO | cut -d ' ' -f 1`"
+fi
 
 while true; do
    if [[ `pwd` == $HOME ]]; then
@@ -30,7 +41,7 @@ while true; do
    PWD=`pwd`
    BASE=`basename "$PWD"`
 
-   if [ -e '.git' ]; then
+   if [ "$MOUNTISSSH" == "" ] && [ -e '.git' ]; then
       STATUS="$CLEAN"
       if [[ `git status -s` != "" ]]; then
         STATUS="$DIRTY"
@@ -40,15 +51,26 @@ while true; do
       break
    fi
 
+   if [[ "`pwd`" == "$MOUNTPOINT" ]]; then
+      PROMPT="/ $PROMPT"
+      break
+   fi
+
    PROMPT="$THIN $BASE $PROMPT"
    cd ..
 done
+
+popd > /dev/null
 
 SSH=""
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
    SSH="$HOSTCOLOR$(whoami)@$HOSTNAME $THIN "
 fi
 
-echo -n "$SSH$COLOR$PROMPT$THIN$NORMAL "
+MOUNTP=""
+if [[ "$MOUNT" != "" ]]; then
+  MOUNTP="$MOUNTCOLOR$MOUNT $THIN "
+fi
 
-popd > /dev/null
+echo -n "$SSH$MOUNTP$COLOR$PROMPT$THIN$NORMAL "
+
