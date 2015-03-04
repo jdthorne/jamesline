@@ -15,7 +15,7 @@ instead.
 
 And even better, Jamesline lets you know when you're SSHed into your machine too:
 
-    james@Hostnae ❯ / ❯ etc ❯
+    james@Hostname ❯ / ❯ etc ❯
 
 
 Installation
